@@ -90,7 +90,9 @@ Measured on Qwen3-0.6B (draft) → Qwen3-4B (target), 4 prompts, 200 tokens each
 | Capped HSD | 3.7 | **1.9×** | 52% |
 | Naive HSD | 1.8 | 0.9× | 49% |
 
-**Effect of γ (draft length):** Standard SD peaks around γ = 3–5 and slows down past γ = 10 as the acceptance rate drops. The full speed-vs-γ curves for all three methods are in [`docs/speculative_decoding_speed.pdf`](docs/speculative_decoding_speed.pdf).
+**Effect of γ (draft length):** Standard SD peaks around γ = 3–5 and slows down past γ = 10 as the acceptance rate drops.
+
+![Speed vs gamma](docs/speculative_decoding_speed-1.png)
 
 > **Note:** Naive HSD is slower than the baseline in practice because its resampling step requires multiple additional target model calls. It is included here for research comparison purposes.
 
