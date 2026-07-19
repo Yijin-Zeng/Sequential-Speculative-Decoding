@@ -92,7 +92,7 @@ Measured on Qwen3-0.6B (draft) → Qwen3-4B (target), 4 prompts, 200 tokens each
 
 **Effect of γ (draft length):** Standard SD peaks around γ = 3–5 and slows down past γ = 10 as the acceptance rate drops.
 
-![Speed vs gamma](docs/speculative_decoding_speed-1.png)
+![Speed vs gamma](https://raw.githubusercontent.com/Yijin-Zeng/Sequential-Speculative-Decoding/main/docs/speculative_decoding_speed-1.png)
 
 > **Note:** Naive HSD is slower than the baseline in practice because its resampling step requires multiple additional target model calls. It is included here for research comparison purposes.
 
