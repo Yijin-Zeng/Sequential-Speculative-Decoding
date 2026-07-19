@@ -1,0 +1,17 @@
+.claude/
+.DS_Store
+
+
+# Python packaging artifacts
+__pycache__/
+*.pyc
+build/
+dist/
+*.egg-info/
+
+# IDE
+.idea/
+
+# Virtual envs
+.venv/
+venv/

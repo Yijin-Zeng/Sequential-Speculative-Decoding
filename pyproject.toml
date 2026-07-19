@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sequential-speculative-decoding"
+version = "0.1.0"
+description = "Speculative decoding methods for efficient LLM inference: standard SD and hierarchical speculative decoding (HSD)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Yijin Zeng", email = "yijinzeng98@gmail.com" },
+]
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "transformers>=4.40",
+]
+keywords = ["speculative-decoding", "llm", "inference", "transformers"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Repository = "https://github.com/Yijin-Zeng/Sequential-Speculative-Decoding"
+
+[tool.setuptools.packages.find]
+where = ["src"]
