@@ -143,6 +143,15 @@ baseline_results, spec_results = benchmark(
 
 See `examples/` for runnable scripts.
 
+## Project Structure
+
+```
+src/seqspecdecod/   # the package — generation, sampling, benchmarking, model loading
+notebooks/          # experiments: benchmarks for each method and gamma comparison
+examples/           # runnable scripts showing basic usage and method comparison
+docs/               # figures generated from the notebooks
+```
+
 ## References
 
 1. Leviathan, Y., Kalman, M., & Matias, Y. (2023). [Fast Inference from Transformers via Speculative Decoding](https://arxiv.org/abs/2211.17192). *ICML*.
