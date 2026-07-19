@@ -81,7 +81,7 @@ baseline_results, spec_results = benchmark(
 
 ## Benchmark Results
 
-Measured on Qwen3-0.6B (draft) → Qwen3-4B (target), 4 prompts, 200 tokens each, γ = 5.
+Measured on Qwen3-0.6B (draft) → Qwen3-4B (target), 4 prompts, 200 tokens each, γ = 5. Hardware: NVIDIA GeForce RTX 3070 (8 GB VRAM).
 
 | Method | Speed (tok/s) | Speedup | Acceptance Rate |
 |---|---|---|---|
