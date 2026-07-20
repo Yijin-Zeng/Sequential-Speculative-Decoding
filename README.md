@@ -1,23 +1,24 @@
 # Sequential Speculative Decoding
 
-A Python package implementing speculative decoding methods for faster LLM inference — without changing the output distribution.
+A Python package implementing standard and sequential speculative decoding for accelerating LLM inference
+without changing the output distribution.
 
-Speculative decoding uses a small, fast **draft model** to propose tokens in batches, then lets the larger **target model** verify them in a single forward pass. The result is the same text you'd get from the target model alone, just faster.
+Speculative decoding uses a small, fast **draft model** to multiple propose tokens, then lets the larger **target model** verify them in a single forward pass. The result is that the target model will generate the same text you'd get from the target model alone, but faster.
 
-This package implements three variants:
+This package currently implements three speculative decoding methods:
 - **Standard SD** — token-level verification (Leviathan et al., 2023)
 - **Naive HSD** — sequence-level hierarchical verification (Zhou et al., 2026)
-- **Capped HSD** — improved HSD with capped prefix ratios
+- **Capped HSD** — improved HSD with capped prefix ratios (Zhou et al., 2026)
 
 ## Installation
 
-First, install PyTorch for your hardware (see [pytorch.org](https://pytorch.org/get-started/locally/) to pick the right CUDA build). Then:
+First, install PyTorch for your hardware (see [pytorch.org](https://pytorch.org/get-started/locally/) for the right CUDA). Then run:
 
 ```bash
 pip install sequential-speculative-decoding
 ```
 
-Or from source:
+or:
 
 ```bash
 git clone https://github.com/Yijin-Zeng/Sequential-Speculative-Decoding
@@ -81,30 +82,31 @@ baseline_results, spec_results = benchmark(
 
 ## Benchmark Results
 
-Measured on Qwen3-0.6B (draft) → Qwen3-4B (target), 4 prompts, 200 tokens each, γ = 5. Hardware: NVIDIA GeForce RTX 3070 (8 GB VRAM).
+Measured on Qwen3-0.6B (draft) and Qwen3-4B (target), 4 prompts, 200 tokens each, Gamma = 5. 
+Hardware: NVIDIA GeForce RTX 3070 (8 GB VRAM).
 
 | Method | Speed (tok/s) | Speedup | Acceptance Rate |
 |---|---|---|---|
 | Target only (baseline) | 1.9 | 1.0× | — |
-| Standard SD | 3.2 | **1.7×** | 43% |
+| Standard SD | 3.2 | 1.7× | 43% |
 | Capped HSD | 3.7 | **1.9×** | 52% |
 | Naive HSD | 1.8 | 0.9× | 49% |
 
-**Effect of γ (draft length):** Standard SD peaks around γ = 3–5 and slows down past γ = 10 as the acceptance rate drops.
+**Effect of Gamma (draft length):**
 
 ![Speed vs gamma](https://raw.githubusercontent.com/Yijin-Zeng/Sequential-Speculative-Decoding/main/docs/speculative_decoding_speed-1.png)
 
-> **Note:** Naive HSD is slower than the baseline in practice because its resampling step requires multiple additional target model calls. It is included here for research comparison purposes.
+> **Note:** Naive HSD is slower than the baseline in practice because its resampling step requires multiple additional target model calls, so in practice, it is not recommended.
 
 ## Methods
 
 ### Standard Speculative Decoding
 
-The draft model generates γ tokens autoregressively. The target model evaluates them all in one forward pass. Tokens are accepted left-to-right with probability min(p/q, 1); the first rejection stops the chain and resamples from a residual distribution. Always produces an extra bonus token if all γ are accepted.
+The draft model proposes Gamma tokens autoregressively. The target model evaluates them all in one forward pass. Tokens are accepted left-to-right with probability min(p/q, 1). The first rejection stops the chain and resamples from a residual distribution. Produces an extra bonus token if all proposed tokens are accepted.
 
 ### Naive Hierarchical SD (HSD)
 
-Verifies the entire drafted sequence at once using joint probability ratios. Scans backward to find the longest acceptable prefix, then resamples the rest using branch divergence probabilities. Each resampling step calls both models again, which is what makes it slow in practice despite a higher per-token acceptance rate.
+Verifies the entire drafted sequence at once using joint probability ratios. Scans backward to find the longest acceptable prefix, then resamples the rest using branch divergence probabilities. Each resampling step calls both models again, which is why it is slow in practice.
 
 ### Capped HSD
 
@@ -148,8 +150,8 @@ See `examples/` for runnable scripts.
 ## Project Structure
 
 ```
-src/seqspecdecod/   # the package — generation, sampling, benchmarking, model loading
-notebooks/          # experiments: benchmarks for each method and gamma comparison
+src/seqspecdecod/   # the source code for the package, including generation, sampling, benchmarking, model loading
+notebooks/          # toy experiments, including several simple experiments for each method and gamma comparison
 examples/           # runnable scripts showing basic usage and method comparison
 docs/               # figures generated from the notebooks
 ```
