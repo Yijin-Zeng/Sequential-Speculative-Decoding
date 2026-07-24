@@ -3,7 +3,7 @@
 A Python package implementing standard and sequential speculative decoding for accelerating LLM inference
 without changing the output distribution.
 
-Speculative decoding uses a small, fast **draft model** to multiple propose tokens, then lets the larger **target model** verify them in a single forward pass. The result is that the target model will generate the same text you'd get from the target model alone, but faster.
+Speculative decoding uses a small, fast **draft model** to propose multiple tokens, then lets the larger **target model** verify them in a single forward pass. The result is the same text you'd get from the target model alone, but faster.
 
 This package currently implements three speculative decoding methods:
 - **Standard SD** — token-level verification (Leviathan et al., 2023)

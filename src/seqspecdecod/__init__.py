@@ -19,7 +19,7 @@ from .generation import (
 )
 from .benchmark import benchmark
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "load_models",
